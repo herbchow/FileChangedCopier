@@ -28,13 +28,15 @@ public class FileCopierUI extends javax.swing.JFrame implements INotifyFileChang
     private File destinationFolder;
     private File sourceFolder;
     private String sourceFileName;
+    private MonitorsListModel ActiveMonitorsListModel;
 
     /**
      * Creates new form FileCopierWindow
      */
     public FileCopierUI() {
         initComponents();
-        logger = new LoggerUI(jTextArea1);
+        
+        customInitComponents();
     }
 
     /**
@@ -46,47 +48,86 @@ public class FileCopierUI extends javax.swing.JFrame implements INotifyFileChang
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFileChooser1 = new javax.swing.JFileChooser();
+        fileChooserDialog = new javax.swing.JFileChooser();
         jProgressBar1 = new javax.swing.JProgressBar();
         jPanel1 = new javax.swing.JPanel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        sourceTextField = new javax.swing.JTextField();
+        BrowseSourceFileButton = new javax.swing.JButton();
+        destinationTextField = new javax.swing.JTextField();
+        BrowseDestinationButton = new javax.swing.JButton();
+        AddMonitorButton = new javax.swing.JButton();
+        TabbedPane = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        LogTextArea = new javax.swing.JTextArea();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ActiveMonitorsList = new javax.swing.JList();
+        RemoveMonitorButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField3.setText("SourcePath");
+        sourceTextField.setText("SourcePath");
 
-        jButton3.setText("Browse Source");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        BrowseSourceFileButton.setText("Browse Source");
+        BrowseSourceFileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                BrowseSourceFileButtonActionPerformed(evt);
             }
         });
 
-        jTextField4.setText("DestinationPath");
+        destinationTextField.setText("DestinationPath");
 
-        jButton4.setText("Browse Destination");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        BrowseDestinationButton.setText("Browse Destination");
+        BrowseDestinationButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                BrowseDestinationButtonActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Add");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        AddMonitorButton.setText("Add");
+        AddMonitorButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                AddMonitorButtonActionPerformed(evt);
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        LogTextArea.setColumns(20);
+        LogTextArea.setLineWrap(true);
+        LogTextArea.setRows(5);
+        jScrollPane1.setViewportView(LogTextArea);
+
+        TabbedPane.addTab("Output", jScrollPane1);
+
+        jScrollPane2.setViewportView(ActiveMonitorsList);
+
+        RemoveMonitorButton.setText("Remove Monitor");
+        RemoveMonitorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoveMonitorButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(RemoveMonitorButton)
+                        .addGap(0, 427, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RemoveMonitorButton))
+        );
+
+        TabbedPane.addTab("Active Monitors", jPanel2);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -95,32 +136,32 @@ public class FileCopierUI extends javax.swing.JFrame implements INotifyFileChang
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(destinationTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sourceTextField, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(BrowseSourceFileButton, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BrowseDestinationButton, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(AddMonitorButton, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(TabbedPane, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sourceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(BrowseSourceFileButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(destinationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
+                .addComponent(BrowseDestinationButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(AddMonitorButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                .addComponent(TabbedPane)
                 .addContainerGap())
         );
 
@@ -148,12 +189,12 @@ public class FileCopierUI extends javax.swing.JFrame implements INotifyFileChang
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void BrowseSourceFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BrowseSourceFileButtonActionPerformed
         // TODO add your handling code here:
-        jFileChooser1.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int returnValue = jFileChooser1.showOpenDialog(FileCopierUI.this);
+        fileChooserDialog.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int returnValue = fileChooserDialog.showOpenDialog(FileCopierUI.this);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-            sourceFile = jFileChooser1.getSelectedFile();
+            sourceFile = fileChooserDialog.getSelectedFile();
             if(sourceFile.isFile())
             {
                 sourceFolder = sourceFile.getParentFile();
@@ -164,29 +205,40 @@ public class FileCopierUI extends javax.swing.JFrame implements INotifyFileChang
                 sourceFolder = sourceFile;
             }
             logger.Log("Chose source: " + sourceFile.getName());
-            jTextField3.setText(sourceFile.getName());
+            sourceTextField.setText(sourceFile.getName());
         }
+    }//GEN-LAST:event_BrowseSourceFileButtonActionPerformed
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void AddMonitorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddMonitorButtonActionPerformed
+        String sourcePath = sourceFolder.getAbsolutePath() + sourceFile.getName();
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        logger.Log("Starting monitor task for : " + sourceFolder.getName());
+        logger.Log("Starting monitor task for : " + sourcePath);
         MonitorEntryWorker worker = new MonitorEntryWorker(sourceFolder, sourceFileName, destinationFolder, logger, this);
         worker.execute();
-    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        jFileChooser1.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int returnValue = jFileChooser1.showOpenDialog(FileCopierUI.this);
+        MonitorEntry newEntry = new MonitorEntry();
+        newEntry.Worker = worker;
+        newEntry.EntryText = sourcePath + " ==> " + destinationFolder;
+        ActiveMonitorsListModel.Add(newEntry);
+    }//GEN-LAST:event_AddMonitorButtonActionPerformed
+
+    private void BrowseDestinationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BrowseDestinationButtonActionPerformed
+        fileChooserDialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnValue = fileChooserDialog.showOpenDialog(FileCopierUI.this);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-            destinationFolder = jFileChooser1.getSelectedFile();
+            destinationFolder = fileChooserDialog.getSelectedFile();
             if (destinationFolder.isDirectory()) {
                 logger.Log("Chose destination: " + destinationFolder.getAbsolutePath());
-                jTextField4.setText(sourceFile.getName());
+                destinationTextField.setText(destinationFolder.getAbsolutePath());
             }
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_BrowseDestinationButtonActionPerformed
+
+    private void RemoveMonitorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveMonitorButtonActionPerformed
+        // Remove selected active monitor
+        MonitorEntry removed = ActiveMonitorsListModel.RemoveEntry(ActiveMonitorsList.getSelectedIndex());
+        removed.Worker.cancel(false);
+    }//GEN-LAST:event_RemoveMonitorButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,16 +276,21 @@ public class FileCopierUI extends javax.swing.JFrame implements INotifyFileChang
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JList ActiveMonitorsList;
+    private javax.swing.JButton AddMonitorButton;
+    private javax.swing.JButton BrowseDestinationButton;
+    private javax.swing.JButton BrowseSourceFileButton;
+    private javax.swing.JTextArea LogTextArea;
+    private javax.swing.JButton RemoveMonitorButton;
+    private javax.swing.JTabbedPane TabbedPane;
+    private javax.swing.JTextField destinationTextField;
+    private javax.swing.JFileChooser fileChooserDialog;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField sourceTextField;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -255,34 +312,12 @@ public class FileCopierUI extends javax.swing.JFrame implements INotifyFileChang
         } catch (IOException ex) {
             Logger.getLogger(FileCopierUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-//
-//        FileChannel source = null;
-//        FileChannel destination = null;
-//
-//        try {
-//            source = new FileInputStream(sourceFile).getChannel();
-//            destination = new FileOutputStream(destFile, false).getChannel();
-//            destination.transferFrom(source, 0, source.size());
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(FileCopierUI.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IOException ex) {
-//            Logger.getLogger(FileCopierUI.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            if (source != null) {
-//                try {
-//                    source.close();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(FileCopierUI.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//            if (destination != null) {
-//                try {
-//                    destination.close();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(FileCopierUI.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        }
+    }
+
+    private void customInitComponents() {
+        logger = new LoggerUI(LogTextArea);
+        ActiveMonitorsListModel = new MonitorsListModel();
+        ActiveMonitorsList.setModel(ActiveMonitorsListModel);
     }
 
 }
